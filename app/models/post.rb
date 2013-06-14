@@ -3,7 +3,11 @@ class Post < ActiveRecord::Base
   belongs_to :author
   has_many :comments
 
-  def self.search(query)
-    where("title ilike :query or body ilike :query", query: "%#{query}%")
-  end
+  include PgSearch
+
+  pg_search_scope :search,
+                  against: [:title, :body],
+                  using: {
+                    tsearch: { dictionary: :spanish }
+                  }
 end
