@@ -1,0 +1,19 @@
+<h1>Mi blog, ndaé</h1>
+
+<%= form_tag posts_path, method: :get do %>
+  <%= text_field_tag :query, params[:query] %>
+  <%= submit_tag "buscar"%>
+<% end %>
+
+<% @posts.each do |post| %>
+  <div>
+    <h2><%= post.title %></h2>
+    <span>Por <i><%= post.author.name %></i><span>
+    <div><%= post.body %></div>
+    <ul> La gente dijo:
+      <% post.comments.each do |comment|%>
+        <li> <%= comment.name %>: <%= comment.content %>
+      <% end %>
+    <ul>
+  </div>
+<% end %>
