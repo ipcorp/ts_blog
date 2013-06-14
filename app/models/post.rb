@@ -7,6 +7,11 @@ class Post < ActiveRecord::Base
 
   pg_search_scope :search,
                   against: [:title, :body],
+                  associated_against: {
+                    author: [:name],
+                    comments: [:name, :content]
+                  },
+                  ignoring: :accents,
                   using: {
                     tsearch: { dictionary: :spanish }
                   }
